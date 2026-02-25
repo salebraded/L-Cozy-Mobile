@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'signup_screen.dart'; // Make sure you have this import!
+import 'signup_screen.dart'; 
+import '../Student page/student_home_screen.dart'; // 🌟 Added this import!
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -129,8 +130,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Login Button
                 ElevatedButton(
                   onPressed: () {
-                    // TODO: Implement backend check here to route based on user type
                     print("Logging in with: ${_emailController.text}");
+                    
+                    // 🌟 NEW FUNCTION: Navigate to the Student Home Screen 🌟
+                    // (Note: Later on, you will add an 'if' statement here to check 
+                    // if they are an owner or a student before routing them)
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const StudentHomeScreen(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF34495E),
@@ -161,8 +171,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        // THIS IS THE NEW FUNCTION!
-                        // It pushes the SignUpScreen onto the navigation stack
                         Navigator.push(
                           context,
                           MaterialPageRoute(

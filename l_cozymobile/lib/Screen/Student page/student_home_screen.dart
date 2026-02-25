@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+// 🌟 ADDED IMPORTS FOR ALL YOUR NEW SCREENS 🌟
+import 'student_messages.dart';
+import 'student_bookings.dart';
+import 'student_payments.dart';
+import 'student_profiles.dart';
+
 class StudentHomeScreen extends StatefulWidget {
   const StudentHomeScreen({Key? key}) : super(key: key);
 
@@ -48,19 +54,29 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF4F6F9), // App background
       
-      // 🌟 MAIN BODY: Switches content based on Bottom Nav selection 🌟
+      // MAIN BODY: Switches content based on Bottom Nav selection
       body: SafeArea(
+        // 🌟 UPDATED ROUTING LOGIC 🌟
         child: _selectedIndex == 0 
             ? _buildHomeFeed() 
-            : Center(
-                child: Text(
-                  "Content for Tab $_selectedIndex coming soon!",
-                  style: const TextStyle(color: Color(0xFF7F8C8D), fontSize: 16),
-                ),
-              ),
+            : _selectedIndex == 1
+                ? const StudentMessagesScreen()
+                : _selectedIndex == 3
+                    ? const StudentBookingsScreen()
+                    : _selectedIndex == 4
+                        ? const StudentPaymentsScreen()
+                        : _selectedIndex == 5
+                            ? const StudentProfileScreen()
+                            : Center(
+                                child: Text(
+                                  // This will dynamically show for the "Saved" tab (Index 2)
+                                  "Content for Tab $_selectedIndex coming soon!",
+                                  style: const TextStyle(color: Color(0xFF7F8C8D), fontSize: 16),
+                                ),
+                              ),
       ),
 
-      // 🌟 BOTTOM NAVIGATION BAR 🌟
+      // BOTTOM NAVIGATION BAR
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -68,17 +84,45 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
         unselectedItemColor: const Color(0xFF7F8C8D),
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed, // Prevents items from shifting
+        selectedFontSize: 11, // Smaller font to fit 6 items comfortably
+        unselectedFontSize: 11,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite_outline), activeIcon: Icon(Icons.favorite), label: 'Saved'),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today_outlined), activeIcon: Icon(Icons.calendar_today), label: 'Bookings'),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), activeIcon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined), 
+            activeIcon: Icon(Icons.home), 
+            label: 'Home'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble_outline), 
+            activeIcon: Icon(Icons.chat_bubble), 
+            label: 'Messages'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite_outline), 
+            activeIcon: Icon(Icons.favorite), 
+            label: 'Saved'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today_outlined), 
+            activeIcon: Icon(Icons.calendar_today), 
+            label: 'Bookings'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_balance_wallet_outlined), 
+            activeIcon: Icon(Icons.account_balance_wallet), 
+            label: 'Payment'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline), 
+            activeIcon: Icon(Icons.person), 
+            label: 'Profile'
+          ),
         ],
       ),
     );
   }
 
-  // 🌟 HELPER METHOD: Builds the main Home Feed 🌟
+  // HELPER METHOD: Builds the main Home Feed
   Widget _buildHomeFeed() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(20.0),
@@ -139,7 +183,6 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                 child: IconButton(
                   icon: const Icon(Icons.tune, color: Colors.white),
                   onPressed: () {
-                    // TODO: Open Filter Bottom Sheet
                     print("Filter tapped!");
                   },
                 ),
@@ -184,7 +227,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
     );
   }
 
-  // 🌟 HELPER METHOD: Builds Category Chips 🌟
+  // HELPER METHOD: Builds Category Chips
   Widget _buildCategoryChip(String label, bool isSelected) {
     return Container(
       margin: const EdgeInsets.only(right: 10),
@@ -204,11 +247,10 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
     );
   }
 
-  // 🌟 HELPER METHOD: Builds Individual Dorm Cards 🌟
+  // HELPER METHOD: Builds Individual Dorm Cards
   Widget _buildDormCard(Map<String, dynamic> dorm) {
     return GestureDetector(
       onTap: () {
-        // TODO: Navigate to Dormitory Details Screen
         print("Tapped on ${dorm['name']}");
       },
       child: Container(
